@@ -20,3 +20,4 @@ class ProjectTestController extends Controller
     ]);
     }
 }
+// http://127.0.0.1:8000/api/posts -- chiamata API tramite Postman + dati rivevuti --
