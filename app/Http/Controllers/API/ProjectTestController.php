@@ -13,7 +13,8 @@ class ProjectTestController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::orderByDesc('id')->get();
+        $posts = Post::with(['category', 'technologies', 'user'])->orderByDesc('id')->get(6);
+
         return response()->json([
         'success' => true,
         'posts' =>  $posts,

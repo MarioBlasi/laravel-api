@@ -81,7 +81,7 @@
                 </div>
                 @empty
                     <div class="col">
-                        <p>Sorry </p>
+                        <p>dsfrgsdf </p>
                     </div>
                 @endforelse
            
