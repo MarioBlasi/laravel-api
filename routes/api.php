@@ -30,3 +30,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // });
 
 Route::get('/posts', [ProjectTestController::class, 'index']);
+Route::get('/posts/{post:slug}', [ProjectTestController::class, 'show']);
+// Route::get('/projects/{project:slug}', 'API\ProjectTestController@show');

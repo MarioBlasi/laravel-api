@@ -20,5 +20,24 @@ class ProjectTestController extends Controller
         'posts' =>  $posts,
     ]);
     }
+
+    public function show($slug){
+        $post = Post::with(['category', 'technology', 'user'])->where('slug',$slug)->first();
+        dd($post);
+
+        if($post){
+
+            return response()->json([
+                'success'=> true,
+                'post' => $post
+            ]);
+        }
+        else{
+            return response()->json([
+                'success'=> false,
+                'post' => 'Post not found 404',
+            ]);
+        }
+    }
 }
 // http://127.0.0.1:8000/api/posts -- chiamata API tramite Postman + dati rivevuti --
