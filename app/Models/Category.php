@@ -4,24 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Hasmany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     use HasFactory;
 
+
     protected $fillable = ['name', 'slug'];
 
-   
     /**
-     * Get the post that owns the Post
+     * Get all of the posts for the Category
      *
-     * @return \Illuminate\Database\Eloquent\Relations\Hasmany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function post(): Hasmany
+    public function posts(): HasMany
     {
-        return $this->Hasmany(Post::class);
+        return $this->hasMany(Post::class);
     }
-
-
 }

@@ -14,13 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            // Add the column first
-            $table->unsignedBigInteger('category_id')
-            ->nullable()->after('id');
-
-            // Add the foreign key
-            $table->foreign('category_id')->references('id')
-            ->on('categories')->onDelete('set null');
+            $table->unsignedBigInteger('user_id')->nullable()->after('id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -32,10 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            // drop the constrains
-            $table->dropForeign('posts_category_id_foreign');
-            // drop the column
-            $table->dropColumn('category_id');
+            $table->dropForeign('posts_user_id_foreign');
+            $table->dropColumn('user_id');
         });
     }
 };

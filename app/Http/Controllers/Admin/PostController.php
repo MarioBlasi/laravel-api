@@ -7,11 +7,10 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Tecnology;
-use Illuminate\Contacts\Cache\Store;
+use App\Models\Tag;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
 
 class PostController extends Controller
 {
@@ -23,7 +22,9 @@ class PostController extends Controller
     public function index()
     {
 
-        $post = Auth::user()->posts()->orderByDesc('id')->paginate(8);
+        //dd(Auth::user(), Auth::id());
+
+        $posts = Auth::user()->posts()->orderByDesc('id')->paginate(8);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -35,10 +36,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderByDesc('id')->get();
-        $technologies = Tecnology::orderByDesc('id')->get();
 
-        return view('admin.posts.create', compact('categories','technologies'));
+
+        $categories = Category::orderByDesc('id')->get();
+        $tags = Tag::orderByDesc('id')->get();
+
+        //dd($tags);
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -49,32 +53,38 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //validate request
-        $val_data = $request->validate();
+        //dd($request->all());
+        // validate the request
+        $val_data =  $request->validated();
+        //dd($val_data);
+
         // generate the title slug
         $slug = Post::generateSlug($val_data['title']);
-        
+        //dd($slug);
         $val_data['slug'] = $slug;
+        //dd($val_data);
 
         $val_data['user_id'] = Auth::id();
+        //dd($val_data);
 
-        if($request->hasFile('cover_image')){
+
+        if ($request->hasFile('cover_image')) {
             $image_path = Storage::put('uploads', $request->cover_image);
+            //dd($image_path);
             $val_data['cover_image'] = $image_path;
-
         }
 
 
-
-        // create the new post
+        //dd($val_data);
+        // Create the new Post
         $new_post = Post::create($val_data);
-        // redirect back
-        
+
         // Attach the checked tags
-        if ($request->has('technologies')) {
-            $new_post->technologies()->attach($request->technologies);
+        if ($request->has('tags')) {
+            $new_post->tags()->attach($request->tags);
         }
-        // redirect to_route
+
+        // redirect back
         return to_route('admin.posts.index')->with('message', 'Post Created Successfully');
     }
 
@@ -98,9 +108,13 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::orderByDesc('id')->get();
-        $technologies = Technology::orderByDesc('id')->get();
+        $tags = Tag::orderByDesc('id')->get();
 
-        return view('admin.posts.edit', compact('post', 'categories', 'technologies'));
+
+        if (Auth::id() === $post->user_id) {
+            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        }
+        abort(403);
     }
 
     /**
@@ -112,37 +126,51 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $val_data = $request->validate();
+        //dd($request->all());
 
+        $val_data = $request->validated();
+        //dd($val_data);
+
+        /* TODO:
+        What happens if i update the post title ?
+        */
+        // Checks if the request has a key called title
+        //dd($request->has('title'));
+
+        // generate the title slug
         $slug = Post::generateSlug($val_data['title']);
-
+        //dd($slug);
         $val_data['slug'] = $slug;
+        //dd($val_data);
 
 
 
+        if ($request->hasFile('cover_image')) {
+            //dd('here');
 
-        if($request->hasFile('cover_image')){
+            //if post->cover_image
+            // delete the previous image
 
-            if($post->cover_image){
+            if ($post->cover_image) {
                 Storage::delete($post->cover_image);
             }
 
+            // Save the file in the storage and get its path
             $image_path = Storage::put('uploads', $request->cover_image);
-
+            //dd($image_path);
             $val_data['cover_image'] = $image_path;
         }
 
 
 
 
-
         $post->update($val_data);
 
-        if ($request->has('technologies')) {
-            $post->technologies()->sync($request->technologies);
+        if ($request->has('tags')) {
+            $post->tags()->sync($request->tags);
         }
-        
-        return to_route('admin.posts.index')->with('message', 'Post:' . $post->title . 'Updated');
+
+        return to_route('admin.posts.index')->with('message', 'Post: ' . $post->title . 'Updated');
     }
 
     /**
@@ -153,11 +181,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if($post->cover_image){
+        //detach all relationships with tags in the pivot table (only if cascadeOnDelete is not in the db migration)
+        //$post->tags()->sync([]);
+
+        // remove the image from the storage
+        if ($post->cover_image) {
             Storage::delete($post->cover_image);
         }
-
         $post->delete();
-        return to_route('admin.posts.index')->with('message', 'Post:' . $post->title . 'Deleted');
+        return to_route('admin.posts.index')->with('message', 'Post: ' . $post->title . 'Deleted');
     }
 }

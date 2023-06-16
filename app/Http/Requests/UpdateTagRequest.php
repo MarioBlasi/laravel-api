@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdatePostRequest extends FormRequest
+class UpdateTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +23,8 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this->post);
         return [
-            'title' => ['required', Rule::unique('posts', 'title')->ignore($this->post), 'max:150'],
-            'cover_image' => ['nullable', 'image', 'max:955'],
-            'content' => ['nullable'],
-            'category_id' => ['exists:categories,id'],
-            'tags' => ['exists:tags,id']
-
+            'name' => 'required'
         ];
     }
 }

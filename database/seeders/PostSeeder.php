@@ -6,7 +6,7 @@ use App\Models\Post;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str; 
+use Illuminate\Support\Str;
 
 
 class PostSeeder extends Seeder
@@ -22,10 +22,11 @@ class PostSeeder extends Seeder
 
             $post = new Post();
             $post->title = $faker->sentence(3);
-            $post->slug = Str::slug($post->title, '-'); 
-            $post->content = $faker->paragraphs(asText: true); 
-            $post->cover_image = 'placeholders/'->imageUrl('storage/app/public/placeholders', fullPath:false, category:
-             'Posts', format:'jpg', word:$post->title, red:true);
+            $post->slug = Str::slug($post->title, '-');
+            $post->content = $faker->paragraphs(asText: true);
+            $post->user_id = 1;
+            $post->cover_image = 'placeholders/' . $faker->image('storage/app/public/placeholders/', 640,480, 'Posts', false, true,
+           $post->title, true);
             $post->save();
         }
     }

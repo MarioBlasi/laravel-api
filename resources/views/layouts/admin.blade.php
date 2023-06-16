@@ -24,58 +24,58 @@
     <div id="app">
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
             <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">BoolPress</a>
-            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" 
-            data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" 
-            aria-label="Toggle navigation">
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 
-            <div class="dropdown px-3">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        {{ Auth::user()->name }}
+
+            <div class="btn-group dropstart">
+                <button type="button" class="btn dropdown-toggle text-white" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }}
                 </button>
-                <div class="dropdown-menu" aria-labelledby="triggerId">
+                <ul class="dropdown-menu">
+                    <!-- Dropdown menu links -->
                     <a class="dropdown-item" href="{{ url('/') }}">{{__('Home Page')}}</a>
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
                     </a>
+
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                </div>
+                </ul>
             </div>
 
         </nav>
+
         <div class="container-fluid vh-100">
             <div class="row h-100">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                     <div class="position-sticky pt-3">
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.dashboard' ? 'bg-danger' : ''}}" aria-current="page" href="{{route('admin.dashboard')}}">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.dashboard' ? 'bg-dark' : ''}}" aria-current="page" href="{{route('admin.dashboard')}}">
                                     <i class="fa-solid fa-gauge"></i>
                                     {{__('Dashboard')}}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.posts.index' ? 'bg-danger' : ''}}" href="{{route('admin.posts.index')}}">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.posts.index' ? 'bg-dark' : ''}}" href="{{route('admin.posts.index')}}">
                                     <i class="fa-solid fa-thumbtack"></i>
                                     {{__('Posts')}}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.Categories.index' ? 'bg-danger' : ''}}" href="{{route('admin.Categories.index')}}">>
+                                <a class="nav-link " href="{{route('admin.categories.index')}}">
                                     <i class="fa-solid fa-bookmark"></i>
-                                    Categories
+                                    {{__('Categories')}}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.Technologies.index' ? 'bg-danger' : ''}}" href="{{route('admin.Tags.index')}}">>
+                                <a class="nav-link " href="{{route('admin.tags.index')}}">
                                     <i class="fa-solid fa-tags"></i>
-                                    Tags
+                                    {{__('Tags')}}
                                 </a>
                             </li>
 
@@ -93,6 +93,3 @@
 </body>
 
 </html>
-
-
-    

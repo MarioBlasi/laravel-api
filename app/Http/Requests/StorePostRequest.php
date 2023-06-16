@@ -24,11 +24,11 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'unique:posts','max:150'],
+            'title' => ['required', 'unique:posts', 'max:150'],
             'cover_image' => ['nullable', 'image', 'max:955'],
             'content' => ['nullable'],
             'category_id' => ['exists:categories,id'],
-            'technologies' => ['exists:technologies,id']
+            'tags' => ['exists:tags,id']
         ];
     }
 }

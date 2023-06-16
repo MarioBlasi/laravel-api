@@ -13,16 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tecnology', function (Blueprint $table) {
-            
+        Schema::create('post_tag', function (Blueprint $table) {
+
+            // Add post_id column
             $table->unsignedBigInteger('post_id');
+            // Add foreign key
             $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
 
-            $table->unsignedBigInteger('tecnology_id');
-            $table->foreign('tecnology_id')->references('id')->on('tecnologies')->cascadeOnDelete();
-            
+            // Add tag_id column
+            $table->unsignedBigInteger('tag_id');
+            // Add foreign key
+            $table->foreign('tag_id')->references('id')->on('tags')->cascadeOnDelete();
 
-            $table->primary(['post_id', 'tecnology_id']);
+            // Add primary key
+            $table->primary(['post_id', 'tag_id']);
         });
     }
 
@@ -33,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tecnology');
+        Schema::dropIfExists('post_tag');
     }
 };
