@@ -23,7 +23,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">BoolPress</a>
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#"><h2>BoolPress</h2> </a>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -53,27 +53,27 @@
             <div class="row h-100">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                     <div class="position-sticky pt-3">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.dashboard' ? 'bg-dark' : ''}}" aria-current="page" href="{{route('admin.dashboard')}}">
+                        <ul class="nav flex-column ">
+                            <li class="nav-item p-2">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.dashboard' ? 'bg-white shadow rounded pt-2' : ''}}" aria-current="page" href="{{route('admin.dashboard')}}">
                                     <i class="fa-solid fa-gauge"></i>
                                     {{__('Dashboard')}}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{Route::currentRouteName() == 'admin.posts.index' ? 'bg-dark' : ''}}" href="{{route('admin.posts.index')}}">
+                            <li class="nav-item p-2">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.posts.index' ? 'bg-white shadow rounded pt-2' : ''}}" href="{{route('admin.posts.index')}}">
                                     <i class="fa-solid fa-thumbtack"></i>
                                     {{__('Posts')}}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="{{route('admin.categories.index')}}">
+                            <li class="nav-item p-2">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.categories.index' ? 'bg-white shadow rounded pt-2' : ''}}" href="{{route('admin.categories.index')}}">
                                     <i class="fa-solid fa-bookmark"></i>
                                     {{__('Categories')}}
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="{{route('admin.tags.index')}}">
+                            <li class="nav-item p-2">
+                                <a class="nav-link {{Route::currentRouteName() == 'admin.tags.index' ? 'bg-white shadow rounded pt-2' : ''}}" href="{{route('admin.tags.index')}}">
                                     <i class="fa-solid fa-tags"></i>
                                     {{__('Tags')}}
                                 </a>

@@ -21,9 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
+Route::get('/mailable', function() {
+    $lead = Lead::find(1);
+    return new NewLead($lead);
+});
 /* TODO: create Dashboard Controller */
 
 

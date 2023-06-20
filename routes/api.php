@@ -40,3 +40,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+// Aggiungiamo la rotta per il form di contatto
+Route::post('/contacts', [LeadController::class, 'store']);
